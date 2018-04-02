@@ -16,12 +16,16 @@ import provider
 import tf_util
 from model import *
 
+# from pointnet import provider
+# from pointnet.utils import tf_util
+# from pointnet.sem_seg import model
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--gpu', type=int, default=0, help='GPU to use [default: GPU 0]')
 parser.add_argument('--log_dir', default='log', help='Log dir [default: log]')
 parser.add_argument('--num_point', type=int, default=4096, help='Point number [default: 4096]')
-parser.add_argument('--max_epoch', type=int, default=50, help='Epoch to run [default: 50]')
-parser.add_argument('--batch_size', type=int, default=24, help='Batch Size during training [default: 24]')
+parser.add_argument('--max_epoch', type=int, default=10, help='Epoch to run [default: 50]')
+parser.add_argument('--batch_size', type=int, default=2, help='Batch Size during training [default: 24]')
 parser.add_argument('--learning_rate', type=float, default=0.001, help='Initial learning rate [default: 0.001]')
 parser.add_argument('--momentum', type=float, default=0.9, help='Initial learning rate [default: 0.9]')
 parser.add_argument('--optimizer', default='adam', help='adam or momentum [default: adam]')
@@ -92,8 +96,6 @@ print(train_data.shape, train_label.shape)
 print(test_data.shape, test_label.shape)
 
 
-
-
 def log_string(out_str):
     LOG_FOUT.write(out_str+'\n')
     LOG_FOUT.flush()
@@ -159,6 +161,7 @@ def train():
         config.allow_soft_placement = True
         config.log_device_placement = True
         sess = tf.Session(config=config)
+        #sess = tf.Session(config=tf.ConfigProto(device_count={'gpu':0}))
 
         # Add summary writers
         merged = tf.summary.merge_all()

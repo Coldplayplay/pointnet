@@ -11,10 +11,10 @@ import indoor3d_util
 将解析的点云数据和标签整合在一起,XYZRGBL
 每个文件都表示一个房间
 """
-anno_paths = [line.rstrip() for line in open(os.path.join(BASE_DIR, 'meta/anno_paths.txt'))]
+anno_paths = [line.rstrip() for line in open(os.path.join(BASE_DIR, 'meta/5081_anno_paths.txt'))]
 anno_paths = [os.path.join(indoor3d_util.DATA_PATH, p) for p in anno_paths]
 
-output_folder = os.path.join(ROOT_DIR, "data/stanford_indoor3d")
+output_folder = os.path.join(ROOT_DIR, "data/5081_indoor3d")
 if not os.path.exists(output_folder):
     os.mkdir(output_folder)
 

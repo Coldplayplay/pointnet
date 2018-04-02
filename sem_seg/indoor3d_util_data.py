@@ -28,8 +28,9 @@ g_class2color = {'ceiling': [0, 255, 0],
                  'sofa': [200, 100, 100],
                  'bookcase': [10, 200, 100],
                  'board': [200, 200, 200],
+                 'arrest':    [165, 42, 42],  #brown
                  'clutter': [50, 50, 50]}
-g_easy_view_labels = [7, 8, 9, 10, 11, 1]
+g_easy_view_labels = [7, 8, 9, 10, 11, 1, 13]
 g_label2color = {g_classes.index(cls): g_class2color[cls] for cls in g_classes}
 
 
@@ -309,7 +310,8 @@ def room2blocks_wrapper_normalized(data_label_filename, num_point, block_size=1.
                                    random_sample=False, sample_num=None, sample_aug=1):
     if data_label_filename[-3:] == 'txt':
         data_label = np.loadtxt(data_label_filename)
-        #data_label = np.loadtxt('/home/robot/cbc/PointNet/data/test/conferenceRoom_1.txt')
+        xyz_min = np.amin(data_label, axis=0)[0:3]
+        data_label[:, 0:3] -= xyz_min
     elif data_label_filename[-3:] == 'npy':
         data_label = np.load(data_label_filename)
     else:

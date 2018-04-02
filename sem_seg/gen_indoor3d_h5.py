@@ -10,7 +10,7 @@ import indoor3d_util
 
 # Constants
 data_dir = os.path.join(ROOT_DIR, 'data')
-indoor3d_data_dir = os.path.join(data_dir, 'stanford_indoor3d')
+indoor3d_data_dir = os.path.join(data_dir, '5081_indoor3d')
 NUM_POINT = 4096
 H5_BATCH_SIZE = 1000
 data_dim = [NUM_POINT, 9]
@@ -19,9 +19,9 @@ data_dtype = 'float32'
 label_dtype = 'uint8'
 
 # Set paths
-filelist = os.path.join(BASE_DIR, 'meta/all_data_label.txt')
+filelist = os.path.join(BASE_DIR, 'meta/5081_all_data_label.txt')
 data_label_files = [os.path.join(indoor3d_data_dir, line.rstrip()) for line in open(filelist)]
-output_dir = os.path.join(data_dir, 'indoor3d_sem_seg_hdf5_data')
+output_dir = os.path.join(data_dir, '5081_indoor3d_sem_seg_hdf5_data')
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 output_filename_prefix = os.path.join(output_dir, 'ply_data_all')
@@ -74,7 +74,7 @@ sample_cnt = 0
 for i, data_label_filename in enumerate(data_label_files):
     print(data_label_filename)
     data, label = indoor3d_util.room2blocks_wrapper_normalized(data_label_filename, NUM_POINT, block_size=1.0, stride=0.5,
-                                                 random_sample=False, sample_num=None)
+                                                 random_sample=True, sample_num=None)
     print('{0}, {1}'.format(data.shape, label.shape))
     for _ in range(data.shape[0]):
         fout_room.write(os.path.basename(data_label_filename)[0:-4]+'\n')
